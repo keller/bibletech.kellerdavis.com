@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+
+    <title>Exploring NoSQL &amp; the Bible - Keller Davis's 2013 BibleTech Presentation</title>
+    <meta name="author" content="Keller Davis">
+    <meta name="description" content="Discussion of NoSQL and how it relates to the Bible, given at Bibletech Conference 2013">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="css/theme/serif-keller.css" id="theme">
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <div class="slides">
+
+        <section>
+          <h1>Exploring NoSQL and the Bible</h1>
+          <p>Keller Davis - BibleTech 2013</p>
+        </section>
+
+        <section>
+          <h2>About me</h2>
+          <ul>
+            <li>Seattleite</li>
+            <li>Husband</li>
+            <li>Own a dog</li>
+            <li>Senior web developer for Bible Gateway</li>
+            <li>Past year worked on NoSQL</li>
+          </ul>
+          <img src="imgs/kate.jpg">
+          <img src="imgs/ollie.jpg">
+        </section>
+
+        <section>
+          <h2>Exploring NoSQL and the Bible</h2>
+          <ul>
+            <li>About NoSQL</li>
+            <li>My experiences</li>
+            <li>Questions/discussion</li>
+          </ul>
+        </section>
+
+        <section>
+          <section>
+            <h2>Relational Databases vs NoSQL</h2>
+            <img src="imgs/nosql.png" alt="NoSQL">
+          </section>
+          <section>
+            <h2>Relational Databases</h2>
+            <ul>
+              <li>We know and love them</li>
+              <li>Robust</li>
+              <li>Consistent and durable</li>
+              <li>Tried and true</li>
+              <li>Battle hardened</li>
+            </ul>
+          </section>
+          <section>
+            <h2>NoSQL Databases</h2>
+            <ul>
+              <li>Non-relational databases or NoSQL</li>
+              <li>Vary in design and principle quite a bit</li>
+              <li>Trendy</li>
+              <li>Used for "Big Data"</li>
+          </section>
+          <aside class="notes">
+
+          </aside>
+
+          <section>
+            <h2>NoSQL</h2>
+            <img src="imgs/nosql-dbs.png" alt="NoSQL Databases">
+            <p>
+              Some popular and very different NoSQL databases.
+            </p>
+            <aside class="notes">
+              Many relation databases, but they fundamentally very similar. NoSQL varies a lot. 
+            </aside>
+          </section>
+
+          <section>
+            <h2>Scaling Systems</h2>
+            <p>Vertical (scaling up) VS Horizontal (scaling out)</p>
+            <aside class="notes">There are 2 ways to scale something. Vertical scaling is making your server bigger and beefier. Important, but can only get you so far and gets expensive fast. The other way to scale is to scale out, by adding more servers. This gets complicated since you have to partition your data and have to handle more complicated failure scenarios. But allows you to scale indefinitely and linearly.</aside>
+          </section>
+
+          <section>
+            <h2>ACID</h2>
+            <ul>
+              <li><strong>Atomicity</strong> - Each transaction is all or nothing</li>
+              <li><strong>Consistency</strong> - After transaction, the system always sees the same data</li>
+              <li><strong>Isolation</strong> - Transactions don't affect each other</li>
+              <li><strong>Durability</strong> - Once a transaction is committed, data will remain, even on failures</li>
+            </ul>
+            <aside class="notes">Separate from relational databases, but relational databases frequently focus on these concepts. This the gold standard when it comes to relational databases. These are all good things.</aside>
+          </section>
+
+          <section>
+            <h2>CAP Theorem</h2>
+            <p>Eric Brewer - <q>You can have at most two of these properties for any shared-data system</q></p>
+            <ul>
+              <li><strong>Consistency</strong> - The system <em>always</em> sees the same data, regardless of inserts, updates, and deletes</li>
+              <li><strong>Availability</strong> - Requests to non-failing node returns a response</li>
+              <li><strong>Partition tolerance</strong> - The system can be divided into nodes</li>
+            </ul>
+
+            <aside class="notes">
+              You must choose what is a priority
+            </aside>
+          </section>
+
+          <section>
+            <h2>Example</h2>
+            <img src="imgs/cap1.png">
+            <img class="fragment" src="imgs/cap2.png">
+          </section>
+
+           <section>
+            <h2>Building a Scalable System</h2>
+            <ul>
+              <li>CAP applies to both relational databases and NoSQL</li>
+              <li>NoSQL can be either CP or AP (or even CA)</li>
+              <li>Historically speaking, relational databases have been focused on ACID principles</li>
+              <li>NoSQL often focuses on the P (scaling) in CAP and helps with with the lack or C or A</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Why We Chose NoSQL</h2>
+            <p>NoSQL solves many problems...</p>
+            <ul>
+              <li>Scaling and performance</li>
+              <li>High Availability</li>
+              <li>Eventually Consistent</li>
+              <li>Schema-less</li>
+            </ul>
+            <p class="fragment"><br>...but introduces new problems.</p>
+          </section>
+
+        </section>
+
+        <section>
+          <section>
+            <h2>Bible Gateway's NoSQL Project</h2>
+            <p>We wanted a new data store to attach data to Bible references. Could be any type of data...</p>
+            <ul>
+              <li>User annotations</li>
+              <li>User history</li>
+              <li>Extrabiblical works</li>
+              <li>Analytics</li>
+              <li>Other...</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>How Key-Value Store Work</h2>
+            <p>NoSQL is a fancy key-value database</p>
+            <img src="imgs/dht.png" alt="distributed hash table">
+            <p class="fragment">No range queries!<br>(Get all items for Matt.5.1-Matt.5.48)</p>
+          </section>
+
+          <section>
+            <h2>How (Many) NoSQL Databases Work</h2>
+            <p>Most allow range queries</p>
+            <img src="imgs/dht2.png" alt="actual NoSQL-like table">
+            <p class="fragment">Only single index queries!</p>
+          </section>
+
+          <section>
+            <h2>Our Data</h2>
+            <p>Data has multi-dimensional indexes</p>
+            <img src="imgs/dht3.png" alt="what my data looks like">
+          </section>
+
+          <section>
+            <h2>Solution 1</h2>
+            <p>Combine the keys into a single key and use math to query</p>
+            <ul>
+              <li>Couldn't get math to work</li>
+              <li>Not a unique problem, geospatial data</li>
+              <li>Nobody was solving it this way</li>
+            </ul>
+          </section>
+          <section>
+            <h2>Solution 2</h2>
+            <p>Group all items by user/resource and filter out undesired items</p>
+            <img src="imgs/attempt2.png">
+          </section>
+
+          <section>
+            <h2>Solution 2</h2>
+            <p>Group all items by user/resource and filter out undesired items</p>
+            <ul>
+              <li>Many NoSQL can easily append/remove data to the value</li>
+              <li>Gets around range queries and multi-dimensional indexing</li>
+              <li>Potentially problematic if user/resource has lots of items</li>
+              <li>Penalizing power users</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Solution 3</h2>
+            <img src="imgs/attempt3.png">
+
+          </section>
+          <section>
+            <h2>Solution 3</h2>
+            <img src="imgs/tree.png">
+          </section>
+
+          <section>
+            <h2>Solution 3</h2>
+            <p>Partition the data</p>
+            <ul>
+              <li>Creates a tree structure</li>
+              <li>As data grows, searching for it is manageable</li>
+              <li>Doesn't penalize too much for heavy usage</li>
+              <li>Searching through less data VS more requests</li>
+              <li>Probably have to rebalance tree</li>
+              <li>Too complex</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Solution 4</h2>
+            <img src="imgs/attempt4.png">
+          </section>
+
+          <section>
+            <h2>Solution 4</h2>
+            <p>Bible has built-in partitions</p>
+            <ul>
+              <li>Much simpler</li>
+              <li>If always returning single chapters, don't have to filter</li>
+              <li>Multi-index and range queries are non-issues</li>
+              <li>No penalization for power users</li>
+              <li>Winner!</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Other Complexities</h2>
+            <p>Secondary indexes</p>
+            <img src="imgs/index1.png">
+          </section>
+
+          <section>
+            <h2>Other Complexities</h2>
+            <p>Secondary indexes</p>
+            <img src="imgs/index2.png">
+          </section>
+
+          <section>
+            <h2>Solution 4.5</h2>
+            <img src="imgs/attempt4-5.png">
+            <small>Uses range queries for single verse items and benefits from Bible hierarchy for complicated spans.</small>
+          </section>
+
+        </section>
+
+        <section>
+          <h2>Questions?</h2>
+          <p><a target="_blank" href="mailto:keller.davis@biblgateway.com">keller.davis@biblegateway.com</a></p>
+        </section>
+      </div>
+
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.min.js"></script>
+
+    <script>
+      Reveal.initialize({
+        history: true,
+        rollingLinks: true,
+        center: true,
+
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          // { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+          { src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+          // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>
